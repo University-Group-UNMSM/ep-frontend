@@ -1,0 +1,30 @@
+.course-card {
+  color: var(--color-text);
+  background-color: var(--oc-sys-color-surface-container-high);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 300px;
+  max-width: 300px;
+  &:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  &-image {
+    display: flex;
+    height: 7rem;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    object-fit: fill;
+  }
+  &-profile-image {
+    height: 2.5rem;
+    width: 2.5rem;
+    overflow: hidden;
+    object-fit: contain;
+  }
+
+  &-author {
+    font-weight: 700;
+  }
+}

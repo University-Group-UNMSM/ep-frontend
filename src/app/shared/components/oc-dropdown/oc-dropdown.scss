@@ -1,0 +1,27 @@
+.dropdown {
+  position: relative;
+  width: 100%;
+
+  .dropdown-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    color: var(--oc-sys-color-typo-text-less);
+    border: 1px solid var(--oc-sys-color-border);
+    border-radius: 4px;
+    background-color: var(--oc-sys-color-surface-container-high);
+    max-height: 120px;
+    overflow-y: auto;
+    z-index: 1000;
+
+    .dropdown-item {
+      padding: 8px 12px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--oc-sys-color-primary);
+      }
+    }
+  }
+}

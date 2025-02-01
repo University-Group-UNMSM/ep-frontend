@@ -1,0 +1,11 @@
+.role-button {
+  width: 100%;
+  text-align: center;
+  padding: var(--oc-sys-spacing-padding-small);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  &.active {
+    background-color: var(--oc-primary);
+    color: white;
+  }
+}

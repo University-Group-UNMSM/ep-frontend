@@ -1,0 +1,34 @@
+.sidebar {
+  position: relative;
+  min-height: 100%;
+  background-color: var(--oc-sys-color-surface-container-high);
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.3s ease;
+  transition: width 1s ease;
+  &-title-section {
+    margin-bottom: var(--oc-sys-spacing-margin-small);
+  }
+  &-arrow {
+    cursor: pointer;
+    position: absolute;
+    right: -16px;
+    top: 64px;
+    background-color: var(--primary-color);
+    color: white;
+    &:hover {
+      background-color: var(--oc-primary-hover);
+    }
+  }
+  &-hr {
+    border: 1px solid var(--oc-sys-color-surface-container);
+  }
+}
+
+@media screen and (max-width: 616px) {
+  .sidebar {
+    &-arrow {
+      display: none;
+    }
+  }
+}

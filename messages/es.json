@@ -1,0 +1,57 @@
+{
+  "HomePage": {
+    "sidebar": {
+      "menu-item-home": "Inicio",
+      "menu-item-courses": "Cursos",
+      "menu-item-create": "Crear Curso",
+      "change-theme": "Cambiar Tema"
+    }
+  },
+  "Login": {
+    "title": "Bienvenido",
+    "subtitle": "¡Bienvenido de vuelta! Ingresa tus datos, por favor.",
+    "fields": {
+      "email": "Correo Electrónico",
+      "password": "Contraseña"
+    },
+    "footer": {
+      "rememberMe": "Recuérdame",
+      "forgotPassword": "¿Olvidaste tu contraseña?"
+    },
+    "buttons": {
+      "login": "Iniciar Sesión",
+      "create": "Crear una cuenta"
+    }
+  },
+  "Register": {
+    "title": "Registrarse",
+    "subtitle": "¿Cuál es tu función?",
+    "roles": {
+      "student": "Estudiante",
+      "teacher": "Profesor"
+    },
+    "fields": {
+      "name": "Nombre",
+      "lastname": "Apellido",
+      "email": "Correo Electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar Contraseña"
+    },
+    "buttons": {
+      "register": "Registrarse",
+      "hasAccount": "¿Ya tienes una cuenta?"
+    },
+    "terms": {
+      "text": "Al registrarme, acepto los",
+      "termsAndConditions": "términos y condiciones",
+      "and": "y la",
+      "privacyPolicy": "política de privacidad",
+      "final": " de OnlyCourses"
+    }
+  },
+  "LanguageSelector": {
+    "label": "Selecciona el idioma",
+    "en": "Inglés",
+    "es": "Español"
+  }
+}

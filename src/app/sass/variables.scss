@@ -1,0 +1,12 @@
+:root {
+  --neutral-color: hsl(0deg 0% 100%);
+  --dark-neutral-color: hsl(210deg 9% 5%);
+  --neutral-variant-color: hsl(210deg 9% 20%);
+  --dark-neutral-variant-color: hsl(218deg 7% 95%);
+  --primary-color: hsl(212deg 100% 47%);
+}
+
+body.body-dark {
+  --neutral-color: var(--dark-neutral-color);
+  --neutral-variant-color: var(--dark-neutral-variant-color);
+}

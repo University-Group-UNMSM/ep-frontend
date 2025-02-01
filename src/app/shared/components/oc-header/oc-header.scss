@@ -1,0 +1,31 @@
+.header {
+  background-color: var(--oc-sys-color-surface-container-high);
+  transition: background-color 0.3s ease;
+
+  &-button {
+    transition:
+      transform 0.3s ease-in-out,
+      opacity 0.3s ease-in-out;
+    &:hover {
+      background-color: hsla(0, 0%, 0%, 0.1);
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 0 var(--oc-sys-spacing-padding-small);
+    &-actions {
+      gap: var(--oc-sys-spacing-gap-small);
+    }
+  }
+}
+
+body.body-dark {
+  .header {
+    &-button:hover {
+      background-color: hsla(0, 0%, 100%, 0.1);
+    }
+  }
+}

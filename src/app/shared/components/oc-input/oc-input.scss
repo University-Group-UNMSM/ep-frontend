@@ -1,0 +1,59 @@
+.oc-input {
+  .oc-input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    background-color: transparent;
+
+    color: var(--oc-sys-color-typo-text-less);
+
+    input {
+      width: 100%;
+      padding: var(--oc-sys-spacing-padding-small) var(--oc-sys-spacing-padding-medium);
+      transition: border-color 0.3s ease;
+      background-color: var(--oc-sys-color-surface-container-high);
+
+      &::placeholder {
+        color: inherit;
+      }
+
+      &.oc-padding-right {
+        padding-right: var(--oc-sys-spacing-padding-xlarge);
+      }
+
+      &.oc-padding-left {
+        padding-left: var(--oc-sys-spacing-padding-xxlarge);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .oc-icon-container {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+
+      &.input-left {
+        left: var(--oc-sys-spacing-padding-small);
+      }
+
+      &.input-right {
+        right: var(--oc-sys-spacing-padding-xxlarge);
+      }
+    }
+
+    &.disabled {
+      color: var(--oc-sys-color-placeholder-disabled);
+    }
+  }
+
+  .oc-error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "HomePage": {
+    "sidebar": {
+      "menu-item-home": "Home",
+      "menu-item-courses": "Courses",
+      "menu-item-create": "Create Course",
+      "change-theme": "Change Theme"
+    }
+  },
+  "Login": {
+    "title": "Welcome",
+    "subtitle": "Welcome back! Please enter your details.",
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "footer": {
+      "rememberMe": "Remember Me",
+      "forgotPassword": "Forgot Password?"
+    },
+    "buttons": {
+      "login": "Login",
+      "create": "Create Account"
+    }
+  },
+  "Register": {
+    "title": "Sign Up",
+    "subtitle": "What is your function?",
+    "roles": {
+      "student": "Student",
+      "teacher": "Teacher"
+    },
+    "fields": {
+      "name": "Name",
+      "lastname": "Lastname",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "buttons": {
+      "register": "Register",
+      "hasAccount": "Already have an account?"
+    },
+    "terms": {
+      "text": "By registering, I accept the",
+      "termsAndConditions": "terms and conditions",
+      "and": "and the",
+      "privacyPolicy": "privacy policy",
+      "final": " of OnlyCourses"
+    }
+  },
+  "LanguageSelector": {
+    "label": "Select Language",
+    "en": "English",
+    "es": "Spanish"
+  }
+}

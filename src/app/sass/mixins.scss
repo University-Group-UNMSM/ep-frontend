@@ -1,0 +1,316 @@
+@use 'sass:map';
+@use 'sass:list';
+@import './variables';
+//SURFACES COLORS
+$surface-tones-dark: (
+  '70': 8 w,
+  '80': 8.5 w,
+  '90': 9.5 w,
+);
+$surface-tones-light: (
+  '70': 8 b,
+  '80': 8.5 b,
+  '90': 9.5 b,
+);
+$neutral-variant-tones: (
+  '55': 8 w,
+  '70': 5 w,
+  '100': 0.5 w,
+);
+$dark-neutral-variant-tones: (
+  '55': 8 b,
+  '70': 5 b,
+  '100': 0.5 b,
+);
+
+@mixin generate-tones($base-color, $prefix, $tones) {
+  :root {
+    --oc-ref-palette-#{$prefix}-50: #{$base-color};
+  }
+
+  @each $tone, $pair in $tones {
+    $value: list.nth($pair, 1);
+    $mix-indicator: list.nth($pair, 2);
+    $mix-color: if($mix-indicator == 'b', black, white);
+
+    :root {
+      --oc-ref-palette-#{$prefix}-#{$tone}: #{color-mix(in hsl shorter hue, $base-color ($value) * 10%, $mix-color)};
+    }
+  }
+}
+
+@include generate-tones(var(--neutral-color), 'neutral', $surface-tones-light);
+@include generate-tones(var(--dark-neutral-color), 'dark-neutral', $surface-tones-dark);
+@include generate-tones(var(--neutral-variant-color), 'neutral-variant', $neutral-variant-tones);
+@include generate-tones(var(--dark-neutral-variant-color), 'dark-neutral-variant', $dark-neutral-variant-tones);
+
+// Define roles y tonos
+$surface-roles: (
+  'surface-container-low': 70,
+  'surface-container': 80,
+  'surface-container-high': 90,
+  'surface-container-highest': 50,
+);
+$typography-roles: (
+  'typo-text-base': 50,
+  'typo-text-less': 55,
+  'typo-text-disabled': 70,
+  'typo-text-contrast': 100,
+);
+
+@mixin generate-roles($prefix, $roles, $property) {
+  @each $role, $color in $roles {
+    :root {
+      --oc-sys-color-#{$role}: var(--oc-ref-palette-#{$prefix}-#{$color});
+    }
+
+    body.body-dark {
+      --oc-sys-color-#{$role}: var(--oc-ref-palette-dark-#{$prefix}-#{$color});
+    }
+
+    .oc-#{$role} {
+      #{$property}: var(--oc-sys-color-#{$role});
+    }
+  }
+}
+
+@include generate-roles('neutral', $surface-roles, 'background-color');
+@include generate-roles('neutral-variant', $typography-roles, 'color');
+
+$base-font-size: 16px;
+$sizes: (
+  small: (
+    headline: 1rem,
+    title: 0.75rem,
+    body: 0.75rem,
+    label: 0.625rem,
+  ),
+  medium: (
+    headline: 1.25rem,
+    title: 1rem,
+    body: 1rem,
+    label: 0.75rem,
+  ),
+  large: (
+    headline: 2rem,
+    title: 1.5rem,
+    body: 1.5rem,
+    label: 1rem,
+  ),
+);
+$typescale: (
+  headline: 700,
+  title: 600,
+  body: 400,
+  label: 400,
+);
+$line-height-multipliers: (
+  headline: 1.4,
+  title: 1.3,
+  body: 1.5,
+  label: 1.2,
+);
+
+@mixin generate-typescale() {
+  :root {
+    --base-font-size: #{$base-font-size};
+
+    @each $size, $sizes-map in $sizes {
+      @each $type, $rem-size in $sizes-map {
+        --oc-sys-typescale-#{$type}-#{$size}-size: #{$rem-size};
+
+        $line-height-mult: map.get($line-height-multipliers, $type);
+
+        --oc-sys-typescale-#{$type}-#{$size}-line-height: calc(
+          var(--oc-sys-typescale-#{$type}-#{$size}-size) * #{$line-height-mult}
+        );
+
+        $weight: map.get($typescale, $type);
+
+        --oc-sys-typescale-#{$type}-#{$size}-weight: #{$weight};
+      }
+    }
+  }
+}
+
+@mixin generate-typography-classes() {
+  @each $size, $sizes-map in $sizes {
+    @each $type, $rem-size in $sizes-map {
+      $font-size: var(--oc-sys-typescale-#{$type}-#{$size}-size);
+      $line-height: var(--oc-sys-typescale-#{$type}-#{$size}-line-height);
+
+      .oc-typo-#{$type}-#{$size} {
+        font-size: #{$font-size};
+        line-height: #{$line-height};
+        font-weight: var(--oc-sys-typescale-#{$type}-#{$size}-weight);
+      }
+    }
+  }
+}
+
+$font-weights: (
+  thin: 300,
+  normal: 400,
+  bold: 500,
+  bolder: 700,
+);
+
+@mixin generate-font-weight-classes() {
+  @each $weight-name, $weight-value in $font-weights {
+    :root {
+      --oc-sys-font-weight-#{$weight-name}: #{$weight-value};
+    }
+  }
+}
+
+@include generate-font-weight-classes;
+@include generate-typography-classes;
+@include generate-typescale;
+
+// SHAPES
+$sizes: (
+  none: 0,
+  extra-small: 2px,
+  small: 4px,
+  medium: 8px,
+  large: 16px,
+  extra-large: 20px,
+  full: 50%,
+);
+$directions: (
+  top: (
+    border-top-left-radius,
+    border-top-right-radius,
+  ),
+  bottom: (
+    border-bottom-left-radius,
+    border-bottom-right-radius,
+  ),
+  start: (
+    border-top-left-radius,
+    border-bottom-left-radius,
+  ),
+  end: (
+    border-top-right-radius,
+    border-bottom-right-radius,
+  ),
+);
+
+@mixin generate-corner-shapes($sizes) {
+  @each $size, $value in $sizes {
+    :root {
+      --oc-sys-shape-corner-#{$size}: #{$value};
+    }
+    .oc-shape-#{$size} {
+      border-radius: var(--oc-sys-shape-corner-#{$size});
+    }
+  }
+}
+
+@mixin generate-corner-shape-classes($directions, $sizes) {
+  @each $direction, $properties in $directions {
+    @each $size, $value in $sizes {
+      .oc-shape-#{$direction}-#{$size} {
+        @each $property in $properties {
+          #{$property}: var(--oc-sys-shape-corner-#{$size});
+        }
+      }
+    }
+  }
+}
+
+@include generate-corner-shapes($sizes);
+@include generate-corner-shape-classes($directions, $sizes);
+
+// SPACES
+$settings: (
+  gap: (
+    small: 4px,
+    medium: 8px,
+    large: 16px,
+    xlarge: 20px,
+    xxlarge: 32px,
+  ),
+  padding: (
+    xsmall: 4px,
+    small: 8px,
+    medium: 16px,
+    large: 20px,
+    xlarge: 32px,
+    xxlarge: 42px,
+  ),
+);
+
+@mixin generate-styles($prefix, $config) {
+  @each $size, $value in map.get($settings, $config) {
+    .oc-#{$prefix}-#{$size} {
+      #{$config}: $value;
+    }
+
+    :root {
+      --oc-sys-spacing-#{$config}-#{$size}: #{$value};
+    }
+  }
+}
+
+@mixin generate-padding-styles($prefix, $config) {
+  @each $size, $value in map.get($settings, $config) {
+    :root {
+      --oc-sys-spacing-#{$config}-#{$size}: #{$value};
+    }
+
+    .oc-#{$prefix}-#{$size} {
+      padding: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+
+    .oc-#{$prefix}-x-#{$size} {
+      padding-left: var(--oc-sys-spacing-#{$config}-#{$size});
+      padding-right: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+
+    .oc-#{$prefix}-y-#{$size} {
+      padding-top: var(--oc-sys-spacing-#{$config}-#{$size});
+      padding-bottom: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+
+    .oc-#{$prefix}-t-#{$size} {
+      padding-top: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+    .oc-#{$prefix}-r-#{$size} {
+      padding-right: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+    .oc-#{$prefix}-b-#{$size} {
+      padding-bottom: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+    .oc-#{$prefix}-l-#{$size} {
+      padding-left: var(--oc-sys-spacing-#{$config}-#{$size});
+    }
+  }
+}
+
+@include generate-styles('gap', gap);
+@include generate-padding-styles('padding', padding);
+
+$primary-color-tones: (
+  'hover': 9 b,
+  'disabled': 7 w,
+);
+
+@mixin generate-color($base-color, $prefix, $tones) {
+  :root {
+    --oc-#{$prefix}: #{$base-color};
+  }
+
+  @each $state, $pair in $tones {
+    $value: list.nth($pair, 1);
+    $mix-indicator: list.nth($pair, 2);
+    $mix-color: if($mix-indicator == 'b', black, white);
+
+    :root {
+      --oc-#{$prefix}-#{$state}: #{color-mix(in hsl shorter hue, $base-color ($value) * 10%, $mix-color)};
+    }
+  }
+}
+
+// Uso de la mezcla para generar clases basadas en --primary-color
+@include generate-color(var(--primary-color), 'primary', $primary-color-tones);

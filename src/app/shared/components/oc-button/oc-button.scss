@@ -1,0 +1,12 @@
+.oc-button {
+  color: var(--color-text);
+  background: var(--oc-primary);
+  width: 100%;
+  &:hover {
+    background: var(--oc-primary-hover);
+  }
+  &:disabled {
+    background: var(--oc-primary-disabled);
+    cursor: not-allowed;
+  }
+}
