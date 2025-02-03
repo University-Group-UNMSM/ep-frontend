@@ -58,66 +58,48 @@ export default function Register() {
 
   return (
     <section className="register">
-      <AuthBackground src={registerImage} />
       <form className="register-main" onSubmit={(e) => e.preventDefault()}>
+        <AuthBackground src={registerImage} />
         <div className="register-form oc-padding-large">
           <div className="register-logo">
-            <Image src={logoImage} alt="register-logo" width={64} height={64} />
+            <h2 className="text-3xl font-bold text-[#2563EB]">Emprende +</h2>
           </div>
           <header className="register-header oc-gap-small">
-            <span className="oc-typo-headline-large">{t('title')}</span>
-            <span className="oc-typo-body-small oc-typo-text-less">{t('subtitle')}</span>
+            <span className="oc-typo-headline-large">Regístrate</span>
+            <span className="oc-typo-body-small oc-typo-text-less">¿Cúal es tu función?</span>
           </header>
           <RegisterRole onRoleChange={handleRoleChange} />
           <section className="register-fields oc-gap-large">
             <div className="row oc-gap-medium flex flex-col">
               <div className="row oc-gap-medium flex">
                 <label className="register-fields__field oc-gap-medium">
-                  <span>Name</span>
-                  <OcInput onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="ysaac" />
+                  <span>Nombre</span>
+                  <OcInput onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="Jose Alata" />
                 </label>
+              </div>
+              <div className="row oc-gap-medium flex">
                 <label className="register-fields__field oc-gap-medium">
-                  <span>Last Name</span>
-                  <OcInput onChange={(e) => setLastName(e.target.value)} type="text" placeholder="ysaac" />
+                  <span>Celular</span>
+                  <OcInput onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="21545556" />
                 </label>
               </div>
               <div>
                 <label className="register-fields__field oc-gap-medium">
-                  <span>Email</span>
-                  <OcInput onChange={(e) => setEmail(e.target.value)} type="email" placeholder="ysacc@unmsm.edu.pe" />
+                  <span>Correo</span>
+                  <OcInput onChange={(e) => setEmail(e.target.value)} type="email" placeholder="jose@dominio.com" />
                 </label>
               </div>
 
               <div className="row oc-gap-medium flex">
                 <label className="register-fields__field oc-gap-medium">
-                  <span>Password</span>
+                  <span>Contraseña</span>
                   <OcInput onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" />
-                </label>
-                <label className="register-fields__field oc-gap-medium">
-                  <span>Confirm Password</span>
-                  <OcInput type="password" placeholder="*********" />
                 </label>
               </div>
             </div>
 
-            <div className="register-footer">
-              <div className="register-footer__remember oc-gap-medium">
-                <input type="checkbox" required />
-                <span className="oc-typo-label-medium">
-                  {t('terms.text')}{' '}
-                  <a className="register-terms" target="_blank" rel="noopener noreferrer">
-                    {t('terms.termsAndConditions')}
-                  </a>{' '}
-                  {t('terms.and')}{' '}
-                  <a className="register-terms" target="_blank" rel="noopener noreferrer">
-                    {t('terms.privacyPolicy')}
-                  </a>
-                  {t('terms.final')}.
-                </span>
-              </div>
-            </div>
             <div className="register-actions">
-              <OcButton onClick={handleRegister}>{t('buttons.register')}</OcButton>
+              <OcButton onClick={handleRegister}>Registrar</OcButton>
               <Link href="/login">
                 <span className="oc-typo-body-small">{t('buttons.hasAccount')}</span>
               </Link>

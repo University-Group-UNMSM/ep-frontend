@@ -24,13 +24,13 @@ export default function RegisterRole({ onRoleChange }: RegisterRoleProps) {
         className={`role-button oc-surface-container-high oc-shape-medium ${activeRole('teacher')}`}
         onClick={() => toggleRole('teacher')}
       >
-        {t('roles.teacher')}
+        Emprendedor{/* profesor */}
       </div>
       <div
         className={`role-button oc-surface-container-high oc-shape-medium ${activeRole('student')}`}
         onClick={() => toggleRole('student')}
       >
-        {t('roles.student')}
+        Inversionista {/* Alumno */}
       </div>
     </div>
   );

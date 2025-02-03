@@ -8,13 +8,5 @@ export default function CoursesLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <section className="auth">
-      <aside className="auth-theme oc-padding-small oc-gap-small">
-        <OcTheme />
-        <OcLanguage />
-      </aside>
-      {children}
-    </section>
-  );
+  return <section className="auth">{children}</section>;
 }

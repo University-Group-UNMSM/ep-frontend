@@ -45,16 +45,14 @@ export default function Login() {
 
   return (
     <section className="login">
-      <form className="login-main" onSubmit={(e) => e.preventDefault()}>
-        <div className="login-form oc-padding-large oc-gap-xxlarge">
+      <form className="login-main gap-3 p-12" onSubmit={(e) => e.preventDefault()}>
+        <div className="login-form h-full">
           <div className="login-logo">
-            <Image src="https://i.postimg.cc/Y9r5BnTD/YachayL.png" alt="login-logo" width={64} height={64} />
+            <h2 className="text-3xl font-bold text-[#2563EB]">Emprende +</h2>
           </div>
-          <header className="login-header oc-gap-small">
-            <span className="oc-typo-headline-large">{t('title')}</span>
-            <span className="oc-typo-body-small oc-typo-text-less">{t('subtitle')}</span>
-          </header>
-          <section className="login-fields oc-gap-large">
+
+          <span className="oc-typo-headline-large">Inicia Sesión</span>
+          <section className="login-fields oc-gap-large justify-between">
             <label className="login-fields__field oc-gap-medium">
               <span>{t('fields.email')}</span>
               <OcInput placeholder="your-email@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -69,13 +67,14 @@ export default function Login() {
               />
             </label>
             <div className="login-actions oc-gap-medium">
-              <OcButton onClick={handleLogin}>{t('buttons.login')}</OcButton>
+              <OcButton onClick={handleLogin}>Iniciar Sesión</OcButton>
               <Link href="/register">
-                <span className="oc-typo-body-small">{t('buttons.create')}</span>
+                <span className="oc-typo-body-small">No tienes cuenta? Registrate aquí</span>
               </Link>
             </div>
           </section>
         </div>
+        <AuthBackground src="https://i.postimg.cc/rwvyck9n/login.png" />
 
         {/* Mensaje de resultado */}
         {message && (
@@ -88,7 +87,6 @@ export default function Login() {
           </div>
         )}
       </form>
-      <AuthBackground src="https://i.postimg.cc/rwvyck9n/login.png" />
     </section>
   );
 }

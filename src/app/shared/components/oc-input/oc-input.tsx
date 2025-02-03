@@ -10,7 +10,7 @@ interface OcInputProps {
   rules?: Array<(value: string) => string | true>;
   onFocus?: () => void;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value?: string | number;
+  value?: string;
   children?: React.ReactNode; // Aceptamos children como prop
 }
 
