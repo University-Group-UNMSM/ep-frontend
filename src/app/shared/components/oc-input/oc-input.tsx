@@ -5,6 +5,7 @@ interface OcInputProps {
   placeholder: string;
   type?: string;
   nameIcon?: string;
+  name?: string;
   right?: boolean;
   disabled?: boolean;
   rules?: Array<(value: string) => string | true>;
@@ -19,6 +20,7 @@ export default function OcInput({
   disabled,
   placeholder,
   right,
+  name,
   nameIcon, // Este valor puede ser reemplazado por el uso de children
   rules = [],
   onFocus,
@@ -59,6 +61,7 @@ export default function OcInput({
           type={type}
           placeholder={placeholder}
           value={value}
+          name={name}
           onChange={(e) => {
             if (onChange) {
               onChange(e);

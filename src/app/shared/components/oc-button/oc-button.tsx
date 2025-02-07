@@ -3,6 +3,7 @@ import './oc-button.scss';
 interface OcButtonProps {
   disabled?: boolean;
   onClick?: () => void;
+  type?: 'submit' | 'reset' | 'button';
   color?: string;
   bgColor?: string;
   children?: React.ReactNode;
@@ -13,6 +14,7 @@ export default function OcButton({
   disabled,
   onClick,
   bgColor,
+  type,
   color,
   children,
   borderRadius,
@@ -34,6 +36,7 @@ export default function OcButton({
       style={iconStyles()}
       disabled={buttonDisabled}
       onClick={buttonOnClick}
+      type={type || 'button'}
     >
       {children}
     </button>

@@ -1,64 +1,57 @@
 'use client';
 import OcButton from '@/app/shared/components/oc-button';
 import OcInput from '@/app/shared/components/oc-input/oc-input';
-import AuthBackground from '@/auth/components/auth-background';
-import RegisterRole from '@/auth/components/register-role';
-import { useTranslations } from 'next-intl';
+import AuthBackground from '@/app/shared/components/auth-background';
+import RegisterRole from '@/app/shared/components/register-role';
 import './register.scss';
-import Image from 'next/image';
 import Link from 'next/link';
-import { AuthService } from '../../../auth/services/auth.service'; // Ajusta el camino según sea necesario
 
-import { getFields, groupedFields } from './register.constants';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
 
 export default function Register() {
-  const t = useTranslations('Register');
+  const { register } = useAuth();
   const registerImage = 'https://i.postimg.cc/6Qn1LTw8/register.png';
-  const logoImage = 'https://i.postimg.cc/Y9r5BnTD/YachayL.png';
-  const authService = new AuthService();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [role, setRole] = useState<'teacher' | 'student' | null>(null);
+
+  const [role, setRole] = useState<'entrepreneur' | 'investor' | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false); // Estado para determinar el tipo de mensaje
   const router = useRouter();
-  const handleRoleChange = (role: 'teacher' | 'student' | null) => {
+  const handleRoleChange = (role: 'entrepreneur' | 'investor' | null) => {
     setRole(role);
   };
-  useEffect(() => {
-    localStorage.removeItem('authToken');
-  }, []);
-  const handleRegister = async () => {
-    console.log('resultado', email, password, name, lastName, role);
-    const result = await authService.register(email, password, name, lastName, role);
-
-    if (result.userId) {
-      console.log('Register success:', result.message);
-      setMessage(result.message);
-      setIsSuccess(true);
-      // Redirige a la página de inicio de sesión después de un breve retraso
-      setTimeout(() => {
-        router.push('/login'); // Redirige a la página de inicio de sesión
-      }, 3000); // Puedes ajustar el tiempo según lo necesites
-    } else {
-      console.log('Login failed:', result.message);
-      setMessage(result.message);
-      setIsSuccess(false);
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+  });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!role) {
+      alert('Por favor, selecciona un rol.');
+      return;
     }
 
-    // Ocultar el mensaje después de 3 segundos
-    setTimeout(() => {
-      setMessage('');
-    }, 3000);
+    try {
+      setIsLoading(true);
+      await register(form.name, form.email, form.password, form.phone, role);
+      setIsLoading(false);
+      alert('Registro exitoso. Ahora inicia sesión.');
+      router.push('/login');
+    } catch (error) {
+      console.error('Error al registrar', error);
+      alert('Error al registrarse. Inténtalo de nuevo.');
+    }
   };
-
   return (
     <section className="register">
-      <form className="register-main" onSubmit={(e) => e.preventDefault()}>
+      <form className="register-main" onSubmit={handleSubmit}>
         <AuthBackground src={registerImage} />
         <div className="register-form oc-padding-large">
           <div className="register-logo">
@@ -74,34 +67,46 @@ export default function Register() {
               <div className="row oc-gap-medium flex">
                 <label className="register-fields__field oc-gap-medium">
                   <span>Nombre</span>
-                  <OcInput onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="Jose Alata" />
+                  <OcInput name="name" onChange={handleChange} value={form.name} type="text" placeholder="Jose Alata" />
                 </label>
               </div>
               <div className="row oc-gap-medium flex">
                 <label className="register-fields__field oc-gap-medium">
                   <span>Celular</span>
-                  <OcInput onChange={(e) => setFirstName(e.target.value)} type="text" placeholder="21545556" />
+                  <OcInput name="phone" onChange={handleChange} value={form.phone} type="text" placeholder="21545556" />
                 </label>
               </div>
               <div>
                 <label className="register-fields__field oc-gap-medium">
                   <span>Correo</span>
-                  <OcInput onChange={(e) => setEmail(e.target.value)} type="email" placeholder="jose@dominio.com" />
+                  <OcInput
+                    name="email"
+                    onChange={handleChange}
+                    value={form.email}
+                    type="email"
+                    placeholder="jose@dominio.com"
+                  />
                 </label>
               </div>
 
               <div className="row oc-gap-medium flex">
                 <label className="register-fields__field oc-gap-medium">
                   <span>Contraseña</span>
-                  <OcInput onChange={(e) => setPassword(e.target.value)} type="password" placeholder="********" />
+                  <OcInput
+                    name="password"
+                    onChange={handleChange}
+                    value={form.password}
+                    type="password"
+                    placeholder="********"
+                  />
                 </label>
               </div>
             </div>
 
             <div className="register-actions">
-              <OcButton onClick={handleRegister}>Registrar</OcButton>
+              <OcButton type={'submit'}>Registrar</OcButton>
               <Link href="/login">
-                <span className="oc-typo-body-small">{t('buttons.hasAccount')}</span>
+                <span className="oc-typo-body-small">ya tienes una cuenta? Inicia aquí</span>
               </Link>
             </div>
           </section>
