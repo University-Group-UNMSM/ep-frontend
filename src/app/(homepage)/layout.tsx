@@ -10,9 +10,6 @@ export default function CoursesLayout({
 }>) {
   return (
     <section className="flex min-h-screen">
-      <div>
-        <OcSideBar />
-      </div>
       <div className="flex w-full flex-col">
         <Header />
         <main className="home-page-main oc-padding-medium">{children}</main>
