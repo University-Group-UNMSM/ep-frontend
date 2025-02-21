@@ -26,6 +26,13 @@ export default async function HomePageLayout({
 }>) {
   return (
     <html lang="es">
+       <head>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+            rel="stylesheet"
+          >
+          </link>
+        </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AuthProvider>{children}</AuthProvider>
       </body>
