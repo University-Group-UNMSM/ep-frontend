@@ -7,7 +7,7 @@ interface AuthContextType {
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (name: string, email: string, password: string, phone: string, role: string) => Promise<void>;
+  register: (name: string, email: string, password: string, phone: string, type: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('token', data.token);
   };
 
-  const register = async (name: string, email: string, password: string, phone: string, role: string) => {
-    await registerUser(name, email, password, phone, role);
+  const register = async (name: string, email: string, password: string, phone: string, type: string) => {
+    await registerUser(name, email, password, phone, type);
   };
 
   const logout = () => {

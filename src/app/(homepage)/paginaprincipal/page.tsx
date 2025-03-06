@@ -1,21 +1,31 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import './principalpage.scss';
 
-import { useRouter } from 'next/navigation';
 import OcInput from '@/app/shared/components/oc-input/oc-input';
 import OcButton from '@/app/shared/components/oc-button';
+import RatingComponent from '@/app/shared/components/rating/page';
+import ModalComponent from '@/app/shared/components/modal-project/page';
 
 export default function PaginaPrincipal() {
   const router = useRouter();
-  useEffect(() => {
-    const token = localStorage.getItem('token'); // Obtener token del localStorage
-    if (!token) {
-      router.push('/login'); // Si no hay sesión, redirigir a login
-    }
-  }, []);
+  const [hasToken, setHasToken] = useState<boolean | null>(null);
+  const [isModalProjectOpen, setIsModalProjectOpen] = useState(false);
 
-  if (!localStorage.getItem('token')) return null;
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        router.push('/login');
+      } else {
+        setHasToken(true);
+      }
+    }
+  }, [router]);
+
+  if (hasToken === null) return null; // Espera hasta verificar el token
+
   return (
     <section>
       <div className="container mx-auto max-w-5xl">
@@ -27,147 +37,37 @@ export default function PaginaPrincipal() {
         <div className="flex gap-6">
           <div className="flex-1">
             <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
+              <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow">
                 <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
                   <div className="flex items-center gap-2">
                     <img
-                      className="h-6 w-6 rounded-full"
+                      className="h-9 w-9 rounded-full"
                       src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
                     />
-                    <span className="text-gray-500">
-                      <a className="hover:text-blue-600" href="/profile">
+                    <span className="text-black">
+                      <a className="font-bold hover:text-blue-600" href="/profile">
                         Ashel Vasquez
                       </a>
                     </span>
                   </div>
-                  <OcButton>Ver más +</OcButton>
                 </div>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
-                <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="h-6 w-6 rounded-full"
-                      src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
-                    />
-                    <span className="text-gray-500">Ashel Vasquez</span>
+                <h2 className="">Portal Esperanza</h2>
+                <div className="cursor-pointer" onClick={() => setIsModalProjectOpen(true)}>
+                  <img
+                    className="w-full rounded-xl object-cover"
+                    src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
+                    alt="Imagen del proyecto"
+                  />
+                </div>
+
+                <div className="relative flex flex-col gap-2">
+                  <p className="cursor-pointer"> 3 ⭐</p>
+                  <hr />
+                  <div className="flex">
+                    <RatingComponent />
                   </div>
-                  <OcButton>Ver más +</OcButton>
                 </div>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
-                <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="h-6 w-6 rounded-full"
-                      src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
-                    />
-                    <span className="text-gray-500">Ashel Vasquez</span>
-                  </div>
-                  <OcButton>Ver más +</OcButton>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
-                <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="h-6 w-6 rounded-full"
-                      src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
-                    />
-                    <span className="text-gray-500">Ashel Vasquez</span>
-                  </div>
-                  <OcButton>Ver más +</OcButton>
-                </div>
-              </div>
-            </div>{' '}
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
-                <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="h-6 w-6 rounded-full"
-                      src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
-                    />
-                    <span className="text-gray-500">Ashel Vasquez</span>
-                  </div>
-                  <OcButton>Ver más +</OcButton>
-                </div>
-              </div>
-            </div>{' '}
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
-                <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="h-6 w-6 rounded-full"
-                      src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
-                    />
-                    <span className="text-gray-500">Ashel Vasquez</span>
-                  </div>
-                  <OcButton>Ver más +</OcButton>
-                </div>
-              </div>
-            </div>{' '}
-            <div className="space-y-4">
-              <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow">
-                <img
-                  className="h-60 w-60 rounded-xl object-cover"
-                  src="https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg"
-                  alt="Imagen del proyecto"
-                />
-                <div className="flex flex-1 flex-col gap-6">
-                  <h2 className="text-xl font-bold">Portal Esperanza</h2>
-                  <div className="flex items-center gap-2">
-                    <img
-                      className="h-6 w-6 rounded-full"
-                      src="https://media.licdn.com/dms/image/v2/C4E03AQGdvup7xrzNug/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1663908551151?e=1744848000&v=beta&t=zLtKvTaN0qXmr3oDFTZ4j8bTDE3obJMlYMoeW459Xb4"
-                    />
-                    <span className="text-gray-500">Ashel Vasquez</span>
-                  </div>
-                  <OcButton>Ver más +</OcButton>
-                </div>
+                <ModalComponent isOpen={isModalProjectOpen} onClose={() => setIsModalProjectOpen(false)} />
               </div>
             </div>
           </div>

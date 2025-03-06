@@ -1,5 +1,5 @@
 export async function loginUser(email: string, password: string) {
-  const res = await fetch('https://31pmac34g6.execute-api.us-east-1.amazonaws.com/v1/sign-in', {
+  const res = await fetch('https://uyf9ihqyt9.execute-api.us-east-1.amazonaws.com/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -15,13 +15,13 @@ export async function loginUser(email: string, password: string) {
   return res.json();
 }
 
-export const registerUser = async (name: string, email: string, password: string, phone: string, role: string) => {
-  const response = await fetch('https://8ymxnoacwg.execute-api.us-east-1.amazonaws.com/test/auth/register', {
+export const registerUser = async (name: string, email: string, password: string, phone: string, type: string) => {
+  const response = await fetch('https://uyf9ihqyt9.execute-api.us-east-1.amazonaws.com/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, email, password, phone, role }),
+    body: JSON.stringify({ name, email, password, phone, type }),
   });
 
   if (!response.ok) {

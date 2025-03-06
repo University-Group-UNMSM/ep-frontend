@@ -3,45 +3,24 @@
 import { useState, useEffect, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import OcButton from '@/app/shared/components/oc-button';
+import myprojects from '@/data/myprojects';
 
 export default function Profile() {
   const router = useRouter();
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      name: 'Proyecto 1',
-      description: 'Lorem Ipsum is simply dummy text...',
-      imageUrl: 'https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg',
-      investment: '500000',
-    },
-    {
-      id: 2,
-      name: 'Proyecto 2',
-      description: 'Lorem Ipsum is simply dummy text...',
-      imageUrl: 'https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg',
-      investment: '750000',
-    },
-    {
-      id: 3,
-      name: 'Proyecto 3',
-      description: 'Lorem Ipsum is simply dummy text...',
-      imageUrl: 'https://blog.estudiocontar.com/wp-content/uploads/2021/04/Emprendimiento-de-proyectos.jpeg',
-      investment: '1000000',
-    },
-  ]);
+  const [projects, setProjects] = useState(myprojects);
   const [isModalOpen, setModalOpen] = useState(false);
   const [newProject, setNewProject] = useState({
     name: '',
     description: '',
-    imageUrl: '',
-    investment: '',
+    image: '',
+    investmentAmount: '',
   });
   const [selectedProject, setSelectedProject] = useState<{
     id: number;
     name: string;
     description: string;
-    imageUrl: string;
-    investment: string;
+    image: string;
+    investmentAmount: string;
   } | null>(null); // State for the clicked project
   const [error, setError] = useState('');
 
@@ -55,19 +34,19 @@ export default function Profile() {
   if (!localStorage.getItem('token')) return null;
 
   const handleAddProject = () => {
-    if (!newProject.name || !newProject.description || !newProject.investment) {
+    if (!newProject.name || !newProject.description || !newProject.investmentAmount) {
       setError('Por favor, completa todos los campos obligatorios.');
       return;
     }
 
     setProjects([...projects, { id: projects.length + 1, ...newProject }]);
     setModalOpen(false);
-    setNewProject({ name: '', description: '', imageUrl: '', investment: '' });
+    setNewProject({ name: '', description: '', image: '', investmentAmount: '' });
     setError('');
   };
 
   const handleCancel = () => {
-    setNewProject({ name: '', description: '', imageUrl: '', investment: '' });
+    setNewProject({ name: '', description: '', image: '', investmentAmount: '' });
     setModalOpen(false);
     setError('');
   };
@@ -76,8 +55,8 @@ export default function Profile() {
     id: number;
     name: string;
     description: string;
-    imageUrl: string;
-    investment: string;
+    image: string;
+    investmentAmount: string;
   }) => {
     setSelectedProject(project);
   };
@@ -134,7 +113,7 @@ export default function Profile() {
               className="cursor-pointer overflow-hidden rounded-lg bg-white shadow"
               onClick={() => openProjectModal(project)}
             >
-              <img src={project.imageUrl} alt={project.name} className="h-40 w-full object-cover" />
+              <img src={project.image} alt={project.name} className="h-40 w-full object-cover" />
               <div className="p-4">
                 <h4 className="text-sm font-semibold">{project.name}</h4>
               </div>
@@ -176,27 +155,27 @@ export default function Profile() {
                 ></textarea>
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="imageUrl" className="text-sm font-semibold">
+                <label htmlFor="image" className="text-sm font-semibold">
                   URL de la imagen
                 </label>
                 <input
                   type="text"
                   placeholder="URL de la imagen"
                   className="w-full rounded border p-2"
-                  value={newProject.imageUrl}
-                  onChange={(e) => setNewProject({ ...newProject, imageUrl: e.target.value })}
+                  value={newProject.image}
+                  onChange={(e) => setNewProject({ ...newProject, image: e.target.value })}
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label htmlFor="investment" className="text-sm font-semibold">
+                <label htmlFor="investmentAmount" className="text-sm font-semibold">
                   Inversión necesaria
                 </label>
                 <input
                   type="number"
                   placeholder="Inversión necesaria"
                   className="w-full rounded border p-2"
-                  value={newProject.investment}
-                  onChange={(e) => setNewProject({ ...newProject, investment: e.target.value })}
+                  value={newProject.investmentAmount}
+                  onChange={(e) => setNewProject({ ...newProject, investmentAmount: e.target.value })}
                 />
               </div>
               <div className="flex justify-end space-x-4">
@@ -216,15 +195,11 @@ export default function Profile() {
       {selectedProject && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="relative flex w-[600px] items-center space-x-4 rounded-lg bg-white p-6">
-            <img
-              src={selectedProject.imageUrl}
-              alt={selectedProject.name}
-              className="h-48 w-48 rounded-lg object-cover"
-            />
+            <img src={selectedProject.image} alt={selectedProject.name} className="h-48 w-48 rounded-lg object-cover" />
             <div className="flex flex-col justify-between gap-5">
               <h2 className="text-lg font-bold">{selectedProject.name}</h2>
               <p className="text-sm text-gray-500">{selectedProject.description || 'No description'}</p>
-              <p className="mt-4 text-sm font-semibold">Inversión necesaria: ${selectedProject.investment}</p>
+              <p className="mt-4 text-sm font-semibold">Inversión necesaria: ${selectedProject.investmentAmount}</p>
               <div className="absolute right-2 top-2 text-gray-500 hover:text-gray-800">
                 <OcButton onClick={closeProjectModal}>
                   <span className="material-symbols-outlined font-bold">close</span>
